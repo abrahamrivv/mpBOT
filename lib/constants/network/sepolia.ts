@@ -4,6 +4,6 @@ const ADDRESSES = {
 const NATIVE = "WETH"
 
 // This contract is a Mock Deposit contract, deployed via scripts/deploy_mock_deposits.ts
-const DEPOSIT_CONTRACT_ADDRESS = "0x9227bEF08Eddf3823b6b20b2b52dd6C4E491e684"
+const DEPOSIT_CONTRACT_ADDRESS = "0x5ee75a1B1648C023e885E58bD3735Ae273f2cc52"
 
 export { ADDRESSES, NATIVE, DEPOSIT_CONTRACT_ADDRESS }

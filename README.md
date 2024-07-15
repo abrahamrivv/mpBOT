@@ -16,7 +16,7 @@ Contratos escritos en solidity para el proyecto MetaPool.
   - [Staking](#staking)
   - [LiquidUnstakePool](#liquidunstakepool)
 
-## Introduction
+## Introducción
 
 Metapool product for staking on Ethereum, receiving in exchange mpETH.
 
@@ -96,30 +96,32 @@ const mnemonic = fs.readFileSync(path.join(os.homedir(), ".config/mp-eth-mnemoni
 
 > **Nota:** El archivo `.env` no está creado, debes crearlo por tu cuenta, siguiendo la estructura del archvivo `.env.sample`.
 
-### Configurando archivo .env
 
-Para poder compilar los contratos necesitamos setear 
+### Configuración archivos .env
 
-### Setup .env files
 This project use multiple .env files
 - `.env` for common variables to all network
 - `.env.<network>` for network specific variables
 
 For testing with hardhat generated accounts, the `.env` only requires:
+
 ```
 NETWORK="Network used for all commands"
 ```
+
 If NETWORK is not set, hardhat will try to use the `Sepolia` network.
 
 For production you will need extra variables. Check `.env.sample` for a list of all variables 
 
 Above this, each network requires a `.env.<network>` file with the following variables:
+
 ```
 RPC_ENDPOINT="RPC endpoint URL"
 BLOCK_NUMBER="Block number to fork"
 ```
 
 ## Commands
+
 Note: 
 - All commands also compile the contracts
 ### Compile contracts
@@ -129,15 +131,24 @@ Note:
 `npm test`
 
 ### Deploy
+
+Para desplegar los contratos en una red determinada debes tener en cuenta lo siguiente:
+
+En la ruta `lib/constants/network` encontrarás archivos con nombres de algunas redes. Dentro de estos archivos existen algunos valores que debes configurar para el correcto despliegue de los contratos. 
+
+Desplegaremos los contratos en `sepolia`, y este archivo ya existe, pero si quisieras desplegarlos en alguna otra red, debes crear el archivo con el nombre de la red en esta misma ruta y adicionalmente agregar la configuración dentro del archivo `hardhat.config.ts`.
+
+> **Nota:** Dentro del archivo `.env` debes tener configurado la url del nodo en la variable `RPC_ENDPOINT` .
+
 `npm run deploy <network>`
 
-### Verify contracts
+### Verificar Contratos
 `npm run verify <network>`
 
-### Upgrade implementations
+### Actualizar  implementación
 `TARGET=Staking npm run upgrade <network>`
 
-### Transfer proxies admin to multisig
+### Transfiere proxies admin hacia una multisig
 `npm run transfer_to_multisig <network>`
 
-This only transfer the admin permission to upgrade the contracts implementations, not the `ADMIN_ROLE`
+Esto solo transfiere el permiso de administrador para actualizar las implementaciones de los contratos, no el `ADMIN_ROLE`.
