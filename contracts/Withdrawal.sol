@@ -105,9 +105,11 @@ contract Withdrawal is OwnableUpgradeable {
         address _receiver
     ) external onlyStaking {
         uint256 currentEpoch = getEpoch();
-        if (currentEpoch < withdrawalsStartEpoch)
+        if (currentEpoch < withdrawalsStartEpoch) // Código Original
+        //if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
             revert WithdrawalsNotStarted(currentEpoch, withdrawalsStartEpoch);
-        uint256 unlockEpoch = currentEpoch + 1;
+        uint256 unlockEpoch = currentEpoch + 1; // Código Original
+        //uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
         pendingWithdraws[_user].amount += _amountOut;
         pendingWithdraws[_user].unlockEpoch = unlockEpoch;
         pendingWithdraws[_user].receiver = _receiver;

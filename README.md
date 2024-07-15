@@ -119,18 +119,55 @@ Above this, each network requires a `.env.<network>` file with the following var
 RPC_ENDPOINT="RPC endpoint URL"
 BLOCK_NUMBER="Block number to fork"
 ```
+## Modificaciones de los contratos 
 
-## Commands
+Las siguientes modificaciones solo han sido hechas por motivos educativos, para poder probar las distintas funcionalidades del protocolo sin ningún inconveniente.
 
-Note: 
-- All commands also compile the contracts
-### Compile contracts
+En el contrato `Withdrawal.sol` busca la función `requestWithdraw`.
+
+Tenemos algunos comentarios dentro de la función indicando el código original y el código modificado con **propósitos educativos**. En el video podrás ver y comprender el porqué de estas modificaciones.
+
+```
+if (currentEpoch < withdrawalsStartEpoch) // Código Original
+````
+
+```
+//if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
+````
+
+Cómo ves, hay una línea de código comentada, la descomentaremos y comentaremos la línea original. 
+
+```
+//if (currentEpoch < withdrawalsStartEpoch) // Código Original
+if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
+```
+
+También haremos lo mismo con el siguiente código
+
+```
+uint256 unlockEpoch = currentEpoch + 1; // Código Original
+```
+
+```             
+//uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
+```
+
+```
+//uint256 unlockEpoch = currentEpoch + 1; // Código Original
+uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
+```
+
+## Comandos
+
+> **Nota:** Todos los comandos también compilan los contratos.
+
+### Compilar contratos
 `npm run compile`
 
-### Run tests
+### Correr tests
 `npm test`
 
-### Deploy
+### Despliegue
 
 Para desplegar los contratos en una red determinada debes tener en cuenta lo siguiente:
 
