@@ -157,11 +157,11 @@ if (currentEpoch < withdrawalsStartEpoch) // Código Original
 if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
 ````
 
-Cómo ves, hay una línea de código comentada, la descomentaremos y comentaremos la línea original. 
+Si revisas el contrato, verás que hay una línea de código comentada, la descomentaremos y comentaremos la línea original. 
 
 ```solidity
 if (currentEpoch < withdrawalsStartEpoch) // Código Original
-if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
+//if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
 ```
 
 También haremos lo mismo con el siguiente código
@@ -174,8 +174,10 @@ uint256 unlockEpoch = currentEpoch + 1; // Código Original
 uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
 ```
 
+Resultado final
+
 ```solidity
-uint256 unlockEpoch = currentEpoch + 1; // Código Original
+//uint256 unlockEpoch = currentEpoch + 1; // Código Original
 uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
 ```
 
