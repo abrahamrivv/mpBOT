@@ -15,12 +15,22 @@ Contratos escritos en solidity para el proyecto [MetaPool](https://www.metapool.
 - [Descripción de Contratos](#descripción-de-contratos)
   - [Staking](#staking)
   - [LiquidUnstakePool](#liquidunstakepool)
+- [Instalacion de dependencias](#instalación-de-dependencias)
+- [Compilar contratos](#compilar-contratos)
+- [Configurar MNEMONIC](#configuración-de-mnemonic-para-la-compilación-de-contratos)
+- [Seguridad MNEMONIC](#importancia-de-la-seguridad-del-mnemonic)
+- [Personalizando config MNEMONIC](#personalizando-la-configuración-del-mnemonic)
+- [Configuración archivos .env](#configuración-archivos-env)
+- [Modificación de Contratos](#modificaciones-de-los-contratos)
+- [Comandos](#comandos)
+
 
 ## Introducción
 
 Metapool product for staking on Ethereum, receiving in exchange mpETH.
 
 Allows users to stake ETH or WETH, instant redeem of mpETH (with a small fee) or delayed redeem (1 to 7 days) and add liquidity with ETH or WETH (for instant redeem).
+
 
 ### Contratos desplegados en Sepolia
 
@@ -38,19 +48,23 @@ Allows users to stake ETH or WETH, instant redeem of mpETH (with a small fee) or
 
 A continuación se detalla una descripción breve de las funciones que cumplen cada uno de los contratos dentro del protocolo.
 
+
 ### Staking
 
 Contrato principal responsable de gestionar el staking de ETH/WETH y el canje de mpETH.
+
 
 ### LiquidUnstakePool
 
 Pool de liquidez que permite a los usuarios intercambiar inmediatamente mpETH por ETH, sin ningún retraso pero con una pequeña comisión.
 Además, los usuarios pueden proporcionar liquidez con ETH o WETH. Este ETH se convertirá lentamente en mpETH a través de intercambios y el contrato de Staking también puede usar este ETH (con algunas limitaciones) para crear nuevos validadores, minteando nuevo mpETH para los proveedores de liquidez.
 
+
 ### Withdrawal
 
 Gestiona el canje retrasado de mpETH de los usuarios. Envía ETH de las recompensas y desmonta a los validadores a los usuarios.
 Los usuarios solicitan el retiro en el contrato de Staking y, un epoch después (una semana), completan el retiro en este contrato.
+
 
 ## Instalación de dependencias
 
@@ -64,13 +78,16 @@ npm install
 
 Lo primero que deberíamos probar es la compilación de los contratos. El proyecto está configurado de manera tal que utilica la frase MNEMONIC para la compilación y despliegue de contratos.  
 
+
 ### Configuración de MNEMONIC para la Compilación de Contratos
 
 Para compilar los contratos con éxito, es necesario configurar el MNEMONIC. Esto debe almacenarse en un archivo de texto siguiendo la ruta específica: `~/.config/mp-eth-mnemonic.txt`. Esta configuración es crucial para el correcto funcionamiento del archivo de configuración de Hardhat (`hardhat.config.ts`). Sin esta configuración, ejecutar el comando `npm run compile` resultará en un error.
 
+
 ### Importancia de la Seguridad del MNEMONIC
 
 **Nota:** Se recomienda mantener el MNEMONIC fuera del proyecto para prevenir su exposición. En sistemas basados en UNIX/LINUX, es común almacenar valores de configuración sensibles en una carpeta `.config` en la raíz del servidor o en el directorio del usuario. Esto ayuda a centralizar de manera segura la configuración de seguridad.
+
 
 ## Personalizando la Configuración del MNEMONIC
 
@@ -119,6 +136,8 @@ Above this, each network requires a `.env.<network>` file with the following var
 RPC_ENDPOINT="RPC endpoint URL"
 BLOCK_NUMBER="Block number to fork"
 ```
+
+
 ## Modificaciones de los contratos 
 
 Las siguientes modificaciones solo han sido hechas por motivos educativos, para poder probar las distintas funcionalidades del protocolo sin ningún inconveniente.
@@ -132,13 +151,13 @@ if (currentEpoch < withdrawalsStartEpoch) // Código Original
 ````
 
 ```
-//if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
+if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
 ````
 
 Cómo ves, hay una línea de código comentada, la descomentaremos y comentaremos la línea original. 
 
 ```
-//if (currentEpoch < withdrawalsStartEpoch) // Código Original
+if (currentEpoch < withdrawalsStartEpoch) // Código Original
 if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
 ```
 
@@ -149,11 +168,11 @@ uint256 unlockEpoch = currentEpoch + 1; // Código Original
 ```
 
 ```             
-//uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
+uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
 ```
 
 ```
-//uint256 unlockEpoch = currentEpoch + 1; // Código Original
+uint256 unlockEpoch = currentEpoch + 1; // Código Original
 uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
 ```
 
@@ -162,9 +181,11 @@ uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
 > **Nota:** Todos los comandos también compilan los contratos.
 
 ### Compilar contratos
+
 `npm run compile`
 
 ### Correr tests
+
 `npm test`
 
 ### Despliegue
@@ -175,17 +196,20 @@ En la ruta `lib/constants/network` encontrarás archivos con nombres de algunas 
 
 Desplegaremos los contratos en `sepolia`, y este archivo ya existe, pero si quisieras desplegarlos en alguna otra red, debes crear el archivo con el nombre de la red en esta misma ruta y adicionalmente agregar la configuración dentro del archivo `hardhat.config.ts`.
 
-> **Nota:** Dentro del archivo `.env` debes tener configurado la url del nodo en la variable `RPC_ENDPOINT` .
+> **Nota:** Dentro del archivo `.env` debes tener configurado la url del nodo en la variable `RPC_ENDPOINT` 
 
 `npm run deploy <network>`
 
 ### Verificar Contratos
+
 `npm run verify <network>`
 
 ### Actualizar  implementación
+
 `TARGET=Staking npm run upgrade <network>`
 
 ### Transfiere proxies admin hacia una multisig
+
 `npm run transfer_to_multisig <network>`
 
 Esto solo transfiere el permiso de administrador para actualizar las implementaciones de los contratos, no el `ADMIN_ROLE`.
