@@ -71,7 +71,7 @@ Los usuarios solicitan el retiro en el contrato de Staking y, un epoch después 
 El primer paso en nuestro proyecto será instalar las dependencias del proyecto. Para ello ejecutamos
 
 ```
-npm install
+yarn
 ```
 
 ## Compilar contratos
