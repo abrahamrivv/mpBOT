@@ -1,6 +1,6 @@
 # Metapool Ethereum Staking
 
-Contratos escritos en solidity para el proyecto MetaPool.
+Contratos escritos en solidity para el proyecto [MetaPool](https://www.metapool.app/). Siempre puedes comprobar el código original de MetaPool en [GitHub](https://github.com/Meta-Pool/metapool-ethereum) y también revisar toda su información en [su documentación](https://docs.metapool.app/master).
 
 # Tabla de Contenidos
 
