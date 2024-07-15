@@ -149,28 +149,28 @@ En el contrato `Withdrawal.sol` busca la función `requestWithdraw`.
 
 Tenemos algunos comentarios dentro de la función indicando el código original y el código modificado con **propósitos educativos**. En el video podrás ver y comprender el porqué de estas modificaciones.
 
-````solidity
+```solidity
 if (currentEpoch < withdrawalsStartEpoch) // Código Original
 ````
 
-````solidity
+```solidity
 if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
 ````
 
 Cómo ves, hay una línea de código comentada, la descomentaremos y comentaremos la línea original. 
 
-````solidity
+```solidity
 if (currentEpoch < withdrawalsStartEpoch) // Código Original
 if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
 ```
 
 También haremos lo mismo con el siguiente código
 
-````solidity
+```solidity
 uint256 unlockEpoch = currentEpoch + 1; // Código Original
 ```
 
-````solidity         
+```solidity         
 uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
 ```
 
