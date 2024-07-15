@@ -94,7 +94,8 @@ Para compilar los contratos con éxito, es necesario configurar el MNEMONIC. Est
 Si lo prefieres, tienes la opción de modificar cómo se carga el MNEMONIC en el proyecto. Por defecto, el MNEMONIC se lee del archivo `~/.config/mp-eth-mnemonic.txt` mencionado anteriormente, pero puedes cambiar esto para que se lea de una variable de entorno en su lugar. Para hacer esto, sigue los siguientes pasos:
 
 1. Localiza el siguiente código
-````
+
+````typescript
 const mnemonic = fs.readFileSync(path.join(os.homedir(), ".config/mp-eth-mnemonic.txt")).toString()
 ````
 
@@ -116,26 +117,28 @@ const mnemonic = fs.readFileSync(path.join(os.homedir(), ".config/mp-eth-mnemoni
 
 ### Configuración archivos .env
 
-This project use multiple .env files
-- `.env` for common variables to all network
-- `.env.<network>` for network specific variables
+Este proyecto utiliza múltiples archivos .env
 
-For testing with hardhat generated accounts, the `.env` only requires:
+- `.env` para variables comunes a todas las redes
+- `.env.<network>` para variables específicas de cada red
+
+Para pruebas con cuentas generadas por hardhat el archivo `.env` solo requiere:
 
 ```
-NETWORK="Network used for all commands"
+NETWORK="Red utilizada para todos los comandos"
 ```
 
-If NETWORK is not set, hardhat will try to use the `Sepolia` network.
+Si `NETWORK` no está configurado, hardhat intentará usar la red `Sepolia`.
 
-For production you will need extra variables. Check `.env.sample` for a list of all variables 
+Para producción necesitarás variables adicionales. Consulta el archivo `.env.sample` para ver toda la lista de variables.
 
-Above this, each network requires a `.env.<network>` file with the following variables:
+Además de esto, cada red requiere un archivo `.env.<network>` con las siguientes variables:
 
 ```
 RPC_ENDPOINT="RPC endpoint URL"
 BLOCK_NUMBER="Block number to fork"
 ```
+> **Nota:** Esta sección ha sido traducida pero cómo verás en el video no es necesario tenerla en cuenta.
 
 
 ## Modificaciones de los contratos 
@@ -146,32 +149,32 @@ En el contrato `Withdrawal.sol` busca la función `requestWithdraw`.
 
 Tenemos algunos comentarios dentro de la función indicando el código original y el código modificado con **propósitos educativos**. En el video podrás ver y comprender el porqué de estas modificaciones.
 
-```
+````solidity
 if (currentEpoch < withdrawalsStartEpoch) // Código Original
 ````
 
-```
+````solidity
 if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
 ````
 
 Cómo ves, hay una línea de código comentada, la descomentaremos y comentaremos la línea original. 
 
-```
+````solidity
 if (currentEpoch < withdrawalsStartEpoch) // Código Original
 if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
 ```
 
 También haremos lo mismo con el siguiente código
 
-```
+````solidity
 uint256 unlockEpoch = currentEpoch + 1; // Código Original
 ```
 
-```             
+````solidity         
 uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
 ```
 
-```
+```solidity
 uint256 unlockEpoch = currentEpoch + 1; // Código Original
 uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
 ```
