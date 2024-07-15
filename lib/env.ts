@@ -8,7 +8,7 @@ require("dotenv").config({ path: `.env.${NETWORK}` })
 
 const TESTNETS = ["sepolia", "hardhat"]
 
-const mnemonic = fs.readFileSync(path.join(os.homedir(), ".config/mp-eth-mnemonic.txt")).toString()
+const mnemonic = process.env.MNEMONIC //fs.readFileSync(path.join(os.homedir(), ".config/mp-eth-mnemonic.txt")).toString()
 
 export = {
   BLOCK_NUMBER: process.env.BLOCK_NUMBER ? parseInt(process.env.BLOCK_NUMBER) : null,

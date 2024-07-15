@@ -6,31 +6,83 @@ Metapool product for staking on Ethereum, receiving in exchange mpETH.
 
 Allows users to stake ETH or WETH, instant redeem of mpETH (with a small fee) or delayed redeem (1 to 7 days) and add liquidity with ETH or WETH (for instant redeem).
 
-### Goerli Testnet Deploys
+### Contratos desplegados en Sepolia
 
-> **_NOTE:_** Goerli is no longer supported, use `Sepolia` testnet.
+| Contract                | Address                                    |
+|-------------------------|--------------------------------------------|
+| StakingProxy            | `0xbd9a06cC557a9e3Eb72C44943dfC13438683e1b9` |
+| StakingImpl             | `0xa3CA6021b432a88EEFb5b53B31833e19195b4ecB` |
+| LiquidUnstakePoolProxy  | `0xa1ea6cdA04359666d944f9129FE5FC98d534b056` |
+| LiquidUnstakePoolImpl   | `0xc448761B4077b4B9889B27196A2156BD87a267d3` |
+| WithdrawalProxy         | `0xeF5d75608549AF1209bE069a5D2ceF8bDbE3eae8` |
+| WithdrawalImpl          | `0x9674Ee4cC4321e1641c4c9D0F484F8dc99420aD7` |
 
-Staking deployed to [0x748c905130CC15b92B97084Fd1eEBc2d2419146f](https://goerli.etherscan.io/address/0x748c905130CC15b92B97084Fd1eEBc2d2419146f)
-LiquidUnstakePool deployed to [0x37774000C885e9355eA7C6B025EbF1704141093C](https://goerli.etherscan.io/address/0x37774000C885e9355eA7C6B025EbF1704141093C)
-Withdrawal deployed to [0x1A8c25ADc96Fb62183C4CB5B9F0c47746B847e05](https://goerli.etherscan.io/address/0x1A8c25ADc96Fb62183C4CB5B9F0c47746B847e05)
 
 ## Contracts
 
 ### Staking
 
-Main contract responsible of managing the staking of ETH/WETH and redeem of mpETH
+Contrato principal responsable de gestionar el staking de ETH/WETH y el canje de mpETH.
 
 ### LiquidUnstakePool
 
-Liquidity pool to allow users to immediately exchange mpETH for ETH, without any delay but with a small fee.
-Also users can provide liquidity with ETH or WETH. This ETH will be slowly converted to mpETH through swaps and the Staking contract can also use this ETH (with some limitations) to create new validators, minting new mpETH for liquidity providers.
+Pool de liquidez que permite a los usuarios intercambiar inmediatamente mpETH por ETH, sin ningún retraso pero con una pequeña comisión.
+Además, los usuarios pueden proporcionar liquidez con ETH o WETH. Este ETH se convertirá lentamente en mpETH a través de intercambios y el contrato de Staking también puede usar este ETH (con algunas limitaciones) para crear nuevos validadores, minteando nuevo mpETH para los proveedores de liquidez.
 
 ### Withdrawal
 
-Manage the delayed mpETH redeem of users. Send ETH from rewards and validators disassemble to users.
-Users request the withdraw in the Staking contract and, one epoch later (one week) complete the withdraw on this contract.
+Gestiona el canje retrasado de mpETH de los usuarios. Envía ETH de las recompensas y desmonta a los validadores a los usuarios.
+Los usuarios solicitan el retiro en el contrato de Staking y, un epoch después (una semana), completan el retiro en este contrato.
 
-## Setup .env files
+## Instalación de dependencias
+
+El primer paso en nuestro proyecto será instalar las dependencias del proyecto. Para ello ejecutamos
+
+```
+npm install
+```
+
+## Compilar contratos
+
+Lo primero que deberíamos probar es la compilación de los contratos. El proyecto está configurado de manera tal que utilica la frase MNEMONIC para la compilación y despliegue de contratos.  
+
+### Configuración de MNEMONIC para la Compilación de Contratos
+
+Para compilar los contratos con éxito, es necesario configurar el MNEMONIC. Esto debe almacenarse en un archivo de texto siguiendo la ruta específica: `~/.config/mp-eth-mnemonic.txt`. Esta configuración es crucial para el correcto funcionamiento del archivo de configuración de Hardhat (`hardhat.config.ts`). Sin esta configuración, ejecutar el comando `npm run compile` resultará en un error.
+
+### Importancia de la Seguridad del MNEMONIC
+
+**Nota:** Se recomienda mantener el MNEMONIC fuera del proyecto para prevenir su exposición. En sistemas basados en UNIX/LINUX, es común almacenar valores de configuración sensibles en una carpeta `.config` en la raíz del servidor o en el directorio del usuario. Esto ayuda a centralizar de manera segura la configuración de seguridad.
+
+## Personalizando la Configuración del MNEMONIC
+
+Si lo prefieres, tienes la opción de modificar cómo se carga el MNEMONIC en el proyecto. Por defecto, el MNEMONIC se lee del archivo `~/.config/mp-eth-mnemonic.txt` mencionado anteriormente, pero puedes cambiar esto para que se lea de una variable de entorno en su lugar. Para hacer esto, sigue los siguientes pasos:
+
+1. Localiza el siguiente código
+````
+const mnemonic = fs.readFileSync(path.join(os.homedir(), ".config/mp-eth-mnemonic.txt")).toString()
+````
+
+ en el archivo `lib/env.ts`.
+
+2. Reemplaza el código del paso 1 por lo siguiente:
+
+   ```typescript
+   const mnemonic = process.env.MNEMONIC
+   ````
+3. En el archivo .env debes agregar
+
+   ```typescript
+   MNEMONIC="TU FRASE SEMILLA"
+   ````
+
+> **Nota:** El archivo `.env` no está creado, debes crearlo por tu cuenta, siguiendo la estructura del archvivo `.env.sample`.
+
+### Configurando archivo .env
+
+Para poder compilar los contratos necesitamos setear 
+
+### Setup .env files
 This project use multiple .env files
 - `.env` for common variables to all network
 - `.env.<network>` for network specific variables
