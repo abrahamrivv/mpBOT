@@ -166,6 +166,15 @@ Resultado final
 uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
 ```
 
+Cuando veas el video también notarás lo siguiente. Dejé pendiente el `completeWithdraw`, y les propuse que revisaran el código y lo hicieran por ustedes mismos.
+
+El proceso de `delayedUnstake` realiza una solicitud y cuando hayan transcurrido los `epochs` correspondientes se podrá completar el `withdraw`. De igual manera si quieres hacer una prueba de concepto y poder finalizar el proceso, puedes comentar las siguientes líneas en el contrato `Withdrawal`.
+
+```solidity
+uint256 unlockTime = getEpochStartTime(_withdrawR.unlockEpoch) + validatorsDisassembleTime;
+if (block.timestamp < unlockTime) revert ClaimTooSoon(unlockTime);
+```
+
 ## Comandos
 
 > **Nota:** Todos los comandos también compilan los contratos.
