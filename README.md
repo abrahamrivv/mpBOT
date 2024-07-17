@@ -149,22 +149,7 @@ En el contrato `Withdrawal.sol` busca la función `requestWithdraw`.
 
 Tenemos algunos comentarios dentro de la función indicando el código original y el código modificado con **propósitos educativos**. En el video podrás ver y comprender el porqué de estas modificaciones.
 
-```solidity
-if (currentEpoch < withdrawalsStartEpoch) // Código Original
-````
-
-```solidity
-if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
-````
-
-Si revisas el contrato, verás que hay una línea de código comentada, la descomentaremos y comentaremos la línea original. 
-
-```solidity
-if (currentEpoch < withdrawalsStartEpoch) // Código Original
-//if (currentEpoch <= withdrawalsStartEpoch) // Modificación con propósitos educativos
-```
-
-También haremos lo mismo con el siguiente código
+Verás el siguiente código. Quedémonos con el resultado final, esto nos permitirá solicitar el delayed withdraw sin problemas.
 
 ```solidity
 uint256 unlockEpoch = currentEpoch + 1; // Código Original
