@@ -1,4 +1,4 @@
-# Metapool Ethereum Staking
+# Metapool Ethereum Staking y Front-end para Interactuar con los contratos
 
 Contratos escritos en solidity para el proyecto [MetaPool](https://www.metapool.app/). Siempre puedes comprobar el código original de MetaPool en [GitHub](https://github.com/Meta-Pool/metapool-ethereum) y también revisar toda su información en [su documentación](https://docs.metapool.app/master).
 
@@ -25,11 +25,27 @@ Contratos escritos en solidity para el proyecto [MetaPool](https://www.metapool.
 - [Comandos](#comandos)
 
 
-## Introducción
+# Introducción Proyecto para ETH-Volcano
 
-Metapool product for staking on Ethereum, receiving in exchange mpETH.
+Este proyecto está desarrollado bajo el contexto de la Hackathon de ETH Volcano, en el track de creación de contenido.
 
-Allows users to stake ETH or WETH, instant redeem of mpETH (with a small fee) or delayed redeem (1 to 7 days) and add liquidity with ETH or WETH (for instant redeem).
+Podrás encontrar las instrucciones en este repositorio y en el repositorio del front-end. En el que se utiliza Scaffold-Eth para poder interactuar con los contratos.
+
+El propósito del proyecto es poder explicar cómo funciona el proyecto MetaPool a nivel conceptual y también interactuar con los contratos para los desarrolladores que quieran entender cómo funciona el protocolo a nivel de contratos. Con el objetivo de tener los conocimientos para construir un proyecto sobre MetaPool.
+
+El video consta de lo siguiente:
+
+- Introducción a MetaPool y conceptos como PoS, Liquid Staking.
+- Modificación, despliegue y verificación de contratos.
+- Verificación de contratos Proxy y su respectiva implementación.
+- Desarrollo de un Front-End para realizar las funciones de: stake, unstake, delayed unstaked y stake en la liquidity pool.
+
+
+## Introducción MetaPool
+
+Producto Metapool para apostar en Ethereum y recibir a cambio mpETH.
+
+Permite a los usuarios apostar ETH o WETH, canje instantáneo de mpETH (con una pequeña tarifa) o canje retrasado (de 1 a 7 días) y agregar liquidez con ETH o WETH (para canje instantáneo).
 
 
 ### Contratos desplegados en Sepolia
