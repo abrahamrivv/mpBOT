@@ -38,7 +38,7 @@ El video consta de lo siguiente:
 - Introducción a MetaPool y conceptos como PoS, Liquid Staking.
 - Modificación, despliegue y verificación de contratos.
 - Verificación de contratos Proxy y su respectiva implementación.
-- Desarrollo de un Front-End para realizar las funciones de: stake, unstake, delayed unstaked y stake en la liquidity pool.
+- Desarrollo de un Front-End para realizar las funciones de: stake, unstake, delayed unstake y stake en la liquidity pool.
 
 
 ## Introducción MetaPool
