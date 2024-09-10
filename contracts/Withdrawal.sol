@@ -107,8 +107,8 @@ contract Withdrawal is OwnableUpgradeable {
         uint256 currentEpoch = getEpoch();
         if (currentEpoch < withdrawalsStartEpoch)       
             revert WithdrawalsNotStarted(currentEpoch, withdrawalsStartEpoch);
-        uint256 unlockEpoch = currentEpoch + 1; // Código Original
-        //uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
+        // uint256 unlockEpoch = currentEpoch + 1; // Código Original
+        uint256 unlockEpoch = currentEpoch; // Modificación con propósitos educativos
         pendingWithdraws[_user].amount += _amountOut;
         pendingWithdraws[_user].unlockEpoch = unlockEpoch;
         pendingWithdraws[_user].receiver = _receiver;
@@ -117,25 +117,46 @@ contract Withdrawal is OwnableUpgradeable {
     }
 
     /// @notice Process pending withdrawal if there's enough ETH
+    // function completeWithdraw() external {
+    //     withdrawRequest memory _withdrawR = pendingWithdraws[msg.sender];
+
+    //     if (_withdrawR.amount == 0) revert UserDontHavePendingWithdraw(msg.sender);
+
+    //     uint256 unlockTime = getEpochStartTime(_withdrawR.unlockEpoch) + validatorsDisassembleTime;
+    //     if (block.timestamp < unlockTime) revert ClaimTooSoon(unlockTime);
+
+    //     if (_withdrawR.receiver == address(0)) _withdrawR.receiver = msg.sender;
+    //     totalPendingWithdraw -= _withdrawR.amount;
+    //     delete pendingWithdraws[msg.sender];
+    //     payable(_withdrawR.receiver).sendValue(_withdrawR.amount);
+    //     emit CompleteWithdraw(
+    //         msg.sender,
+    //         _withdrawR.amount,
+    //         _withdrawR.receiver,
+    //         _withdrawR.unlockEpoch
+    //     );
+    // }
+
     function completeWithdraw() external {
-        withdrawRequest memory _withdrawR = pendingWithdraws[msg.sender];
+    withdrawRequest memory _withdrawR = pendingWithdraws[msg.sender];
 
-        if (_withdrawR.amount == 0) revert UserDontHavePendingWithdraw(msg.sender);
+    if (_withdrawR.amount == 0) revert UserDontHavePendingWithdraw(msg.sender);
 
-        uint256 unlockTime = getEpochStartTime(_withdrawR.unlockEpoch) + validatorsDisassembleTime;
-        if (block.timestamp < unlockTime) revert ClaimTooSoon(unlockTime);
+    // En esta solución, eliminamos la verificación de tiempo ya que unlockEpoch == currentEpoch.
+    // Si prefieres mantener cierta verificación de tiempo, ajusta los valores de `unlockEpoch` en requestWithdraw.
 
-        if (_withdrawR.receiver == address(0)) _withdrawR.receiver = msg.sender;
-        totalPendingWithdraw -= _withdrawR.amount;
-        delete pendingWithdraws[msg.sender];
-        payable(_withdrawR.receiver).sendValue(_withdrawR.amount);
-        emit CompleteWithdraw(
-            msg.sender,
-            _withdrawR.amount,
-            _withdrawR.receiver,
-            _withdrawR.unlockEpoch
-        );
-    }
+    if (_withdrawR.receiver == address(0)) _withdrawR.receiver = msg.sender;
+    totalPendingWithdraw -= _withdrawR.amount;
+    delete pendingWithdraws[msg.sender];
+    payable(_withdrawR.receiver).sendValue(_withdrawR.amount);
+    emit CompleteWithdraw(
+        msg.sender,
+        _withdrawR.amount,
+        _withdrawR.receiver,
+        _withdrawR.unlockEpoch
+    );
+}
+
 
     /// @notice Send ETH _amount to Staking
     /// @dev As the validators are always fully disassembled, the contract can have more ETH than the needed for withdrawals. So the Staking can take this ETH and send it again to validators. This shouldn't mint new mpETH

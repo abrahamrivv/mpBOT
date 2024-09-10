@@ -2,6 +2,23 @@
 
 Contratos escritos en solidity para el proyecto [MetaPool](https://www.metapool.app/). Siempre puedes comprobar el código original de MetaPool en [GitHub](https://github.com/Meta-Pool/metapool-ethereum) y también revisar toda su información en [su documentación](https://docs.metapool.app/master).
 
+PD. Este código es una modificación de ETH Volcano hacia el SDK de mpETH de Meta Pool para facilitar la interacción con el SDK y también desde el proyecto "mpBOT" del hackathon de Frutal Web House hicimos algunas modificaciones para que se pudieran desplegar con éxito los contratos en Sepolia Testnet.
+
+Los principales cambios fueron:
+
+- Copiar el archivo env sample y convertirlo en un .env agregando las variables de entorno NETWORK, RPC_ENDPOINT, ETHERSCAN_API_KEY, con su respectivo valor Sepolia, RPC de ALchemy y API KEY de Etherscan.
+- En el contrato Withdrawal.sol quité/comenté toda la función completeWithdraw.
+
+Comandos para interactuar (Windows):
+
+- Compilar: npx hardhat compile    
+- Desplegar: npx hardhat run scripts/deploy.ts --network $NETWORK sepolia
+- Verificar: npx hardhat verify --network $NETWORK sepolia 
+- Verificar contrato individual: npx hardhat verify --network $NETWORK sepolia {address del contrato}
+
+Si es necesario desde Etherscan los contratos Proxy se deben verificar y guardar en la zona de contract, more options y en "its a proxy?".
+
+
 # Tabla de Contenidos
 
 - [Introducción](#introducción)
